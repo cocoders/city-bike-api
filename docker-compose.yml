@@ -1,0 +1,6 @@
+web:
+  build: .
+  volumes:
+    - .:/var/www/city-bike
+  ports:
+    - "80:80"
