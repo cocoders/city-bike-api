@@ -25,7 +25,8 @@
         "behat/behat": "~3.0",
         "phpspec/phpspec": "~2.2",
         "rmiller/behat-spec": "~0.2",
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "everzet/persisted-objects": "^1.0"
     },
     "scripts": {
         "post-root-package-install": [

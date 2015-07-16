@@ -13,6 +13,7 @@ use Cocoders\CityBike\Position;
  */
 class FeatureContext implements Context, SnippetAcceptingContext
 {
+    /** @var \Cocoders\CityBike\DockingStations  */
     private $dockingStations;
     private $foundDockingStations;
     /**
@@ -29,7 +30,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
-        $this->dockingStations = new \Cocoders\InMemory\CityBike\DockingStations();
+        $this->dockingStations = new \Cocoders\File\CityBike\DockingStationsFileRepo();
         $this->foundDockingStations = new \Cocoders\InMemory\CityBike\FoundDockingStations();
     }
 
