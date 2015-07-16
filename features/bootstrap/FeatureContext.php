@@ -30,7 +30,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
-        $this->dockingStations = new \Cocoders\File\CityBike\DockingStationsFileRepo();
+        $this->dockingStations = new \Cocoders\InMemory\CityBike\DockingStations();
         $this->foundDockingStations = new \Cocoders\InMemory\CityBike\FoundDockingStations();
     }
 

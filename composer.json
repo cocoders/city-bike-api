@@ -19,14 +19,14 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "everzet/persisted-objects": "^1.0"
     },
     "require-dev": {
         "behat/behat": "~3.0",
         "phpspec/phpspec": "~2.2",
         "rmiller/behat-spec": "~0.2",
-        "sensio/generator-bundle": "~2.3",
-        "everzet/persisted-objects": "^1.0"
+        "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
         "post-root-package-install": [
