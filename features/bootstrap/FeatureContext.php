@@ -13,6 +13,7 @@ use Cocoders\CityBike\Position;
  */
 class FeatureContext implements Context, SnippetAcceptingContext
 {
+    /** @var \Cocoders\CityBike\DockingStations  */
     private $dockingStations;
     private $foundDockingStations;
     /**

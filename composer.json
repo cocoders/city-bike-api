@@ -19,7 +19,8 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "everzet/persisted-objects": "^1.0"
     },
     "require-dev": {
         "behat/behat": "~3.0",
