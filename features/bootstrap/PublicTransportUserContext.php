@@ -11,7 +11,7 @@ use Cocoders\CityBike\Position;
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext implements Context, SnippetAcceptingContext
+class PublicTransportUserContext implements Context, SnippetAcceptingContext
 {
     /** @var \Cocoders\CityBike\DockingStations  */
     private $dockingStations;

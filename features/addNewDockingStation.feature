@@ -1,6 +1,9 @@
-Feature: As a system administrator
+Feature: Adding new docking station
+
+  In order to add functionality to allow public transport user searching bikes
+  in the system including new docking station
+  As a system administrator
   I want to add new docking stations to the system
-  so public transport users can search bikes in system including that station
 
   Scenario: Adding new docking station
     Given There are no docking stations
