@@ -1,9 +1,9 @@
 <?php
+
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
-
 
 /**
  * Defines administrative features from the specific context.
@@ -34,3 +34,4 @@ class AdministratorContext implements Context, SnippetAcceptingContext
         throw new PendingException();
     }
 }
+
