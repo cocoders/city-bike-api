@@ -13,10 +13,13 @@ class AdministratorContext implements Context, SnippetAcceptingContext
 {
     /** @var \Cocoders\CityBike\DockingStations */
     private $dockingStations;
+    /** @var  \Cocoders\UseCase\AddDockingStation */
+    private $addDockingStation;
 
     public function __construct()
     {
         $this->dockingStations = new \Cocoders\InMemory\CityBike\DockingStations();
+        $this->addDockingStation = new \Cocoders\UseCase\AddDockingStation($this->dockingStations);
     }
 
     /**
@@ -33,14 +36,7 @@ class AdministratorContext implements Context, SnippetAcceptingContext
     public function iAmAddingNewDockingStation(TableNode $table)
     {
         foreach ($table->getHash() as $row) {
-            $dockingStation = new \Cocoders\CityBike\DockingStation(
-                $row['name'],
-                new Position(
-                    $row['lat'],
-                    $row['long']
-                )
-            );
-            $this->dockingStations->add($dockingStation);
+            $this->addDockingStation->execute(new \Cocoders\UseCase\AddDockingStationCommand($row['name'], $row['lat'], $row['long']));
         }
     }
 
@@ -58,3 +54,4 @@ class AdministratorContext implements Context, SnippetAcceptingContext
         throw new \Exception('Docking station not found');
     }
 }
+
