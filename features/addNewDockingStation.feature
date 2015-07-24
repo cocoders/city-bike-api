@@ -10,4 +10,4 @@ Feature: Adding new docking station
     When I am adding new docking station:
       | name                     | lat        | long       |
       | Toruń Plac Rapackiego    | 53.0099343 | 18.6010726 |
-    Then docking station "Toruń Plac Rapcakiego" should be available for public transport users using the system
+    Then docking station "Toruń Plac Rapackiego" should be available for public transport users using the system
