@@ -8,12 +8,6 @@ class AddDockingStationCommand
     private $lat;
     private $long;
 
-    /**
-     * AddDockingStationCommand constructor.
-     * @param $name
-     * @param $lat
-     * @param $long
-     */
     public function __construct($name, $lat, $long)
     {
         $this->name = $name;
@@ -44,7 +38,5 @@ class AddDockingStationCommand
     {
         return $this->long;
     }
-
-
 }
 
