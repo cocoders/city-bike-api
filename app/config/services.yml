@@ -15,3 +15,13 @@ services:
     add_docking_station:
         class: Cocoders\UseCase\AddDockingStation
         arguments: ["@docking_station"]
+
+    docking_station_factory:
+        class: AppBundle\Command\Trm24Factory
+        arguments: []
+
+    add_trm24_stations_command:
+        class: AppBundle\Command\AddTrm24StationsCommand
+        tags:
+            -  { name: console.command }
+        arguments: [@docking_station, @docking_station_factory]
