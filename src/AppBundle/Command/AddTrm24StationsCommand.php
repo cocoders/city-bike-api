@@ -2,7 +2,7 @@
 
 namespace AppBundle\Command;
 
-use Cocoders\CityBike\DockingStations;
+use Cocoders\CityBike\DockingStationsProvider;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -11,13 +11,11 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class AddTrm24StationsCommand extends ContainerAwareCommand
 {
-    private $dockingStations;
     private $dockingStationsFactory;
 
-    public function __construct(DockingStations $dockingStations, DockingStationsFactory $dockingStationsFactory)
+    public function __construct(DockingStationsProvider $dockingStationsProvider)
     {
-        $this->dockingStations = $dockingStations;
-        $this->dockingStationsFactory = $dockingStationsFactory;
+        $this->dockingStationsFactory = $dockingStationsProvider;
 
         parent::__construct();
     }
@@ -37,8 +35,7 @@ class AddTrm24StationsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dockingStations = $this->dockingStationsFactory->create();
-        $dockingStationsNumber = count($dockingStations);
+        $dockingStationsNumber = $this->dockingStationsFactory->getAmount();
         $text = "$dockingStationsNumber docking stations were found on page. ";
 
         if ($dockingStationsNumber < 1) {
@@ -47,7 +44,8 @@ class AddTrm24StationsCommand extends ContainerAwareCommand
         }
 
         if ($input->getOption('force')) {
-            $output->writeln($dockingStationsNumber . ' docking stations saved. ');
+            $this->dockingStationsFactory->saveStations();
+            $output->writeln((string) $dockingStationsNumber . ' docking stations saved. ');
             return;
         }
 
@@ -55,10 +53,10 @@ class AddTrm24StationsCommand extends ContainerAwareCommand
         $question = new ConfirmationQuestion($text .
             'Do you want to add them replacing existing stations (y / n)?', false);
 
-        if (!$helper->ask($input, $output, $question)) {
+        if ($helper->ask($input, $output, $question)) {
+            $this->dockingStationsFactory->saveStations();
             return;
         }
-
     }
 }
 

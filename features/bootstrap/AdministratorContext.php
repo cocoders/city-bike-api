@@ -36,7 +36,12 @@ class AdministratorContext implements Context, SnippetAcceptingContext
     public function iAmAddingNewDockingStation(TableNode $table)
     {
         foreach ($table->getHash() as $row) {
-            $this->addDockingStation->execute(new \Cocoders\UseCase\AddDockingStationCommand($row['name'], $row['lat'], $row['long']));
+            $this->addDockingStation->execute(new \Cocoders\UseCase\AddDockingStationCommand(
+                $row['id'],
+                $row['name'],
+                $row['lat'],
+                $row['long']
+            ));
         }
     }
 

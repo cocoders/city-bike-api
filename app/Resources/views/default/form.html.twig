@@ -4,8 +4,15 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <br>
+    id      name
+    <br>
+
     {% for station in stations %}
+    {{ station.id }}
     {{ station.name }}
+        <br>
 {% endfor %}
 {% endblock %}
 

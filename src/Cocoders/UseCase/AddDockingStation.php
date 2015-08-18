@@ -21,6 +21,7 @@ class AddDockingStation
     public function execute(AddDockingStationCommand $command)
     {
         $dockingStation = new DockingStation(
+            $command->getId(),
             $command->getName(),
             new Position(
                 $command->getLat(),

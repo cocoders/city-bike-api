@@ -8,6 +8,6 @@ Feature: Adding new docking station
   Scenario: Adding new docking station
     Given There are no docking stations
     When I am adding new docking station:
-      | name                     | lat        | long       |
-      | Toruń Plac Rapackiego    | 53.0099343 | 18.6010726 |
+     | id | name                     | lat        | long       |
+     | 3  | Toruń Plac Rapackiego    | 53.0099343 | 18.6010726 |
     Then docking station "Toruń Plac Rapackiego" should be available for public transport users using the system

@@ -13,6 +13,7 @@ class AddDockingStationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id')
             ->add('name')
             ->add('lat')
             ->add('long')
@@ -32,6 +33,7 @@ class AddDockingStationForm extends AbstractType
             'empty_data' => function (FormInterface $form)
             {
                 return new AddDockingStationCommand(
+                    $form->get('id')->getData(),
                     $form->get('name')->getData(),
                     $form->get('lat')->getData(),
                     $form->get('long')->getData()

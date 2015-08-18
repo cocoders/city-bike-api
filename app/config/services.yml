@@ -16,12 +16,12 @@ services:
         class: Cocoders\UseCase\AddDockingStation
         arguments: ["@docking_station"]
 
-    docking_station_factory:
-        class: AppBundle\Command\Trm24Factory
-        arguments: []
+    docking_station_parser:
+        class: Cocoders\Trm24\Trm24Provider
+        arguments: [@add_docking_station]
 
     add_trm24_stations_command:
         class: AppBundle\Command\AddTrm24StationsCommand
         tags:
             -  { name: console.command }
-        arguments: [@docking_station, @docking_station_factory]
+        arguments: [@docking_station_parser]
