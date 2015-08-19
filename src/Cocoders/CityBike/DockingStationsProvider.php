@@ -8,6 +8,5 @@ interface DockingStationsProvider
      * @return DockingStation[]
      */
     public function getAmount();
-    public function saveStations();
+    public function getDockingStations();
 }
-

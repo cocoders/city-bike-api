@@ -3,77 +3,83 @@
 namespace Cocoders\Trm24;
 
 use Cocoders\CityBike\DockingStationsProvider;
-use Cocoders\UseCase\AddDockingStation;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Trm24Provider implements DockingStationsProvider
 {
-    /** @var  \Cocoders\UseCase\AddDockingStation */
-    private $addDockingStation;
+    private $client;
 
-    public function __construct(AddDockingStation $addDockingStation)
+    public function __construct(Client $client)
     {
-        $this->addDockingStation = $addDockingStation;
+        $this->client = $client;
     }
 
     public function getAmount()
     {
-        return count($this->trm24Parser());
+        return count($this->getDockingStations());
     }
 
-    public function saveStations()
+    public function getDockingStations()
     {
-        foreach ($this->trm24Parser() as $row) {
-            $this->addDockingStation->execute(new \Cocoders\UseCase\AddDockingStationCommand(
-                $row['id'],
-                $row['name'],
-                $row['lat'],
-                $row['long']
-            ));
+        $stations = [];
+        foreach ($this->parseStationsUrls() as $url) {
+            $stations[] = $this->parseStationPage($url->getAttribute('href'));
         }
+
+        return $stations;
     }
 
-    private function trm24Parser()
+    private function parseStationsUrls()
     {
-        $client = new Client();
-        $res = $client->get('https://trm24.pl/mapa_stacji.html');
+        $html = $this->client->get('https://trm24.pl/mapa_stacji.html')->getBody()->__toString();
+        $crawler = new Crawler($html);
 
-        $htmlAsString = (string)$res->getBody();
-        $crawler = new Crawler($htmlAsString);
+        return $crawler->filter('#content > div > div > div.inside1 > div > table a');
+    }
 
-        $stationsHrefs = $crawler->filter('#content > div > div > div.inside1 > div > table a');
+    private function parseStationPage($url)
+    {
+        $html = (string) $this->client->get($url)->getBody();
+        $crawler = new Crawler($html);
 
-        $stationsArray = [];
+        return [
+            'id' => $this->parseStationId($crawler),
+            'name' => $this->parseStationName($crawler),
+            'lat' => 0,
+            'long' => 0,
+            'availableBikes' => $this->parseAvailableBikes($crawler)
+        ];
+    }
 
-        foreach ($stationsHrefs as $station) {
-            $stationHtml = $client->get($station->getAttribute('href'));
+    private function parseStationId(Crawler $crawler)
+    {
+        $stationIdText = $crawler->filterXPath('//*[@id="content"]/div/div/div[2]/div/article/h7[1]/text()[1]')->text();
+        $stationIdArray = explode(" ", $stationIdText);
 
-            $stationHtmlAsString = (string)$stationHtml->getBody();
-            $crawler = new Crawler($stationHtmlAsString);
 
-            $stationId = explode(
-                " ",
-                $crawler->filterXPath('//*[@id="content"]/div/div/div[2]/div/article/h7[1]/text()[1]')->text()) [6];
-
-            $stationName = $crawler->
-            filterXPath('//*[@id="content"]/div/div/div[2]/div/article/h7[1]/text()[2]')->text();
-
-            $availableBikesOnStation = explode(
-                " ",
-                $crawler->filter('#content > div > div > div.inside1 > div > article > h7:nth-child(3)')->text()) [0];
-
-            $stationsArray[] =
-                [
-                    "id" => $stationId,
-                    "name" => $stationName,
-                    "lat" => 0,
-                    "long" => 0,
-                    "availableBikes" => $availableBikesOnStation
-                ];
+        if (isset($stationIdArray[6])) {
+            return $stationIdArray[6];
         }
 
-        return $stationsArray;
+        throw new \InvalidArgumentException('Station id does not found on web page');
+    }
+
+    private function parseStationName(Crawler $crawler)
+    {
+        return $crawler->filterXPath('//*[@id="content"]/div/div/div[2]/div/article/h7[1]/text()[2]')->text();
+    }
+
+    private function parseAvailableBikes(Crawler $crawler)
+    {
+        $availableStationsText = $crawler->filterXPath('//*[@id="content"]/div/div/div[2]/div/article/h7[2]')->text();
+        $availableStationsArray = explode(" ", $availableStationsText);
+
+        if (isset($availableStationsArray[0])) {
+            return $availableStationsArray[0];
+        }
+
+        throw new \InvalidArgumentException("Available stations not found");
     }
 }
 

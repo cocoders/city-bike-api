@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form\CityBike;
 
-use Cocoders\UseCase\AddDockingStationCommand;
+use Cocoders\UseCase\AddDockingStation\Command;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -29,10 +29,10 @@ class AddDockingStationForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => AddDockingStationCommand::class,
+            'data_class' => Command::class,
             'empty_data' => function (FormInterface $form)
             {
-                return new AddDockingStationCommand(
+                return new Command(
                     $form->get('id')->getData(),
                     $form->get('name')->getData(),
                     $form->get('lat')->getData(),
@@ -42,4 +42,3 @@ class AddDockingStationForm extends AbstractType
         ));
     }
 }
-

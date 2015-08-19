@@ -1,8 +1,8 @@
 <?php
 
-namespace Cocoders\UseCase;
+namespace Cocoders\UseCase\AddDockingStation;
 
-class AddDockingStationCommand
+class Command implements \Cocoders\UseCase\Command
 {
     private $id;
     private $name;
@@ -49,4 +49,3 @@ class AddDockingStationCommand
         return $this->long;
     }
 }
-

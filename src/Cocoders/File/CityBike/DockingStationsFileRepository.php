@@ -7,7 +7,7 @@ use Cocoders\CityBike\DockingStations;
 use Everzet\PersistedObjects\AccessorObjectIdentifier;
 use Everzet\PersistedObjects\FileRepository;
 
-class DockingStationsFileRepo implements DockingStations
+class DockingStationsFileRepository implements DockingStations
 {
 
     private $stationsRepo;

@@ -8,20 +8,24 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-    docking_station:
-        class: Cocoders\File\CityBike\DockingStationsFileRepo
+    cocoders.repository.docking_station:
+        class: Cocoders\File\CityBike\DockingStationsFileRepository
         arguments: []
 
-    add_docking_station:
-        class: Cocoders\UseCase\AddDockingStation
-        arguments: ["@docking_station"]
+    cocoders.use_case.add_docking_station:
+        class: Cocoders\UseCase\AddDockingStation\AddDockingStation
+        arguments: ["@cocoders.repository.docking_station"]
 
-    docking_station_parser:
+    cocoders.trm24.parser:
         class: Cocoders\Trm24\Trm24Provider
-        arguments: [@add_docking_station]
+        arguments: [@cocoders.trm24.client]
 
-    add_trm24_stations_command:
-        class: AppBundle\Command\AddTrm24StationsCommand
+    cocoders.add_docking_stations_from_provider:
+        class: AppBundle\Command\AddDockingStationsFromProviderCommand
         tags:
             -  { name: console.command }
-        arguments: [@docking_station_parser]
+        arguments: [@cocoders.trm24.parser, @cocoders.use_case.add_docking_station]
+
+    cocoders.trm24.client:
+        class: GuzzleHttp\Client
+        arguments: []
