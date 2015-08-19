@@ -1,18 +1,57 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-
-    <br>
-    id      name
-    <br>
-
-    {% for station in stations %}
-    {{ station.id }}
-    {{ station.name }}
+    <div class="container">
+        <h2>Docking stations edit page</h2>
         <br>
-{% endfor %}
-{% endblock %}
 
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-xs-1">
+                {{ form_widget(form.id, {'attr': {'class': 'form-control', 'placeholder': 'ID'}}) }}
+            </div>
+            <div class="col-xs-2">
+                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
+            </div>
+            <div class="col-xs-2">
+                {{ form_widget(form.lat, {'attr': {'class': 'form-control', 'placeholder': 'Latitude'}}) }}
+            </div>
+            <div class="col-xs-2">
+                {{ form_widget(form.long, {'attr': {'class': 'form-control', 'placeholder': 'Longitude'}}) }}
+            </div>
+            <div class="col-xs-2">
+                {{ form_widget(form.Save, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+        </div>
+        <br>
+
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3"></div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Station name</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for station in stations %}
+                        <tr>
+                            <td>{{ station.id }}</td>
+                            <td>{{ station.name }}</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+{% endblock %}
