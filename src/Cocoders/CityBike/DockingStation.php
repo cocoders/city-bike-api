@@ -9,12 +9,17 @@ class DockingStation
     private $position;
     private $availableBikes;
 
-    public function __construct($id, $name, Position $position)
+    private $lat;
+    private $long;
+
+    public function __construct($id, $name, Position $position, $lat, $long)
     {
         $this->id = $id;
         $this->name = $name;
         $this->position = $position;
         $this->availableBikes = 0;
+        $this->lat = $lat;
+        $this->long = $long;
     }
 
     public function setAvailableBikes($availableBikes)
@@ -41,5 +46,14 @@ class DockingStation
     {
         return $this->id;
     }
-}
 
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    public function getLong()
+    {
+        return $this->long;
+    }
+}

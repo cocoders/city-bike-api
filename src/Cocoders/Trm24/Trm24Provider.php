@@ -32,22 +32,20 @@ class Trm24Provider implements DockingStationsProvider
 
     private function parseStationsUrls()
     {
-        $html = $this->client->get('https://trm24.pl/mapa_stacji.html')->getBody()->__toString();
-        $crawler = new Crawler($html);
-
-        return $crawler->filter('#content > div > div > div.inside1 > div > table a');
+        return $this->getTrm24Body()->filter('#content > div > div > div.inside1 > div > table a');
     }
 
     private function parseStationPage($url)
     {
-        $html = (string) $this->client->get($url)->getBody();
+        $html = (string)$this->client->get($url)->getBody();
         $crawler = new Crawler($html);
 
+        $id = $this->parseStationId($crawler);
         return [
-            'id' => $this->parseStationId($crawler),
+            'id' => $id,
             'name' => $this->parseStationName($crawler),
-            'lat' => 0,
-            'long' => 0,
+            'lat' => $this->parseLatitude($id),
+            'long' => $this->parseLongitude($id),
             'availableBikes' => $this->parseAvailableBikes($crawler)
         ];
     }
@@ -56,7 +54,6 @@ class Trm24Provider implements DockingStationsProvider
     {
         $stationIdText = $crawler->filterXPath('//*[@id="content"]/div/div/div[2]/div/article/h7[1]/text()[1]')->text();
         $stationIdArray = explode(" ", $stationIdText);
-
 
         if (isset($stationIdArray[6])) {
             return $stationIdArray[6];
@@ -81,5 +78,32 @@ class Trm24Provider implements DockingStationsProvider
 
         throw new \InvalidArgumentException("Available stations not found");
     }
-}
 
+    private function getTrm24Body()
+    {
+        $html = (string)$this->client->get('https://trm24.pl/mapa_stacji.html')->getBody();
+        return $crawler = new Crawler($html);
+    }
+
+    private function parseLatLong()
+    {
+        $scriptAsString = $this->getTrm24Body()->filterXPath('//*[@id="content"]/div/div/div[2]/script[2]')->text();
+
+        preg_match_all(
+            "/(?=marker)(.*)(\s=.*)([-+]?\d{2}[.]\d{2,})(.*)([-+]?\d{2}[.]\d{2,})/",
+            $scriptAsString,
+            $matches
+        );
+        return $matches;
+    }
+
+    private function parseLatitude($id)
+    {
+        return $this->parseLatLong()[3][$id - 1];
+    }
+
+    private function parseLongitude($id)
+    {
+        return $this->parseLatLong()[5][$id - 1];
+    }
+}

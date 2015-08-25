@@ -72,6 +72,7 @@ class AddDockingStationsFromProviderCommand extends ContainerAwareCommand implem
         $this->progress = new ProgressBar($output, $dockingStationsNumber);
         $this->progress->start();
 
+
         $stations = $this->dockingStationsFactory->getDockingStations();
 
         foreach ($stations as $station) {

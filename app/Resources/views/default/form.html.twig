@@ -44,14 +44,13 @@
                         <tr>
                             <td>{{ station.id }}</td>
                             <td>{{ station.name }}</td>
-                            <td>0</td>
-                            <td>0</td>
+                            <td>{{ station.lat }}</td>
+                            <td>{{ station.long }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-    </div>
 
 {% endblock %}
