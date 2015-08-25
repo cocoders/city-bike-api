@@ -33,4 +33,12 @@ class DockingStationsFileRepository implements DockingStations
     {
         return $this->stationsRepo->getAll();
     }
+
+    /**
+     * @return DockingStation
+     */
+    public function find($id)
+    {
+        // TODO: Implement find() method.
+    }
 }
