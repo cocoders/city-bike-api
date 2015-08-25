@@ -39,9 +39,7 @@ class AddDockingStation implements UseCase
             new Position(
                 $command->getLat(),
                 $command->getLong()
-            ),
-            $command->getLat(),
-            $command->getLong()
+            )
         );
 
         $this->dockingStations->add($dockingStation);
