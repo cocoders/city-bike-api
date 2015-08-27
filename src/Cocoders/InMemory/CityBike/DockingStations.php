@@ -33,9 +33,10 @@ final class DockingStations implements DockingStationsInterface
     {
         /** @var DockingStation $station */
         foreach ($this->stations as $station) {
-            if ($station->getId() == $id) {
+            if ($station->getId() === $id) {
                 return $station;
             }
         }
+        return null;
     }
 }
