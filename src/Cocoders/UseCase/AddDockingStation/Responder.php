@@ -2,7 +2,9 @@
 
 namespace Cocoders\UseCase\AddDockingStation;
 
-interface Responder extends \Cocoders\UseCase\Responder
+use Cocoders\UseCase\Responder as BaseResponder;
+
+interface Responder extends BaseResponder
 {
     public function addedDockingStation(Response $response);
 }

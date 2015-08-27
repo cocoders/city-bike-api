@@ -10,7 +10,9 @@ use AppBundle\Form\CityBike\AddDockingStationForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller implements Responder
-    {
+{
+    private $response;
+
     /**
      * @Route("/app/example", name="homepage")
      */
@@ -30,19 +32,34 @@ class DefaultController extends Controller implements Responder
 
         $form->handleRequest($request);
 
-        $stations = $this->get('cocoders.repository.docking_station')->findAll();
+        $stations = $this->getDockingStationRepository()->findAll();
+
+        $this->response = $this->render('default/form.html.twig', array(
+            'form' => $form->createView(),
+            'stations' => $stations));
 
         if ($form->isValid()) {
             $this->get('cocoders.use_case.add_docking_station')->execute($form->getData(), $this);
         }
 
-        return $this->render('default/form.html.twig', array(
-            'form' => $form->createView(),
-            'stations' => $stations));
+        return $this->response;
     }
 
     public function addedDockingStation(Response $response)
     {
-        // TODO later: Implement addedDockingStation() method.
+        $this->addFlash(
+            'notice',
+            'Docking station was successfully saved!'
+        );
+
+        $this->response = $this->redirectToRoute('form');
+    }
+
+    /**
+     * @return \Cocoders\CityBike\DockingStations
+     */
+    private function getDockingStationRepository()
+    {
+        return $this->get('cocoders.repository.docking_station');
     }
 }

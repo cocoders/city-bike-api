@@ -39,6 +39,6 @@ class DockingStationsFileRepository implements DockingStations
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->stationsRepo->findById($id);
     }
 }

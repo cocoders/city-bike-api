@@ -2,9 +2,9 @@
 
 namespace Cocoders\UseCase\UpdateAvailableBikes;
 
-use Cocoders\UseCase\Response;
+use Cocoders\UseCase\Response as BaseResponder;
 
-interface Responder extends \Cocoders\UseCase\Responder
+interface Responder extends BaseResponder
 {
     public function updatedAvailableBikesOnStations(Response $response);
 

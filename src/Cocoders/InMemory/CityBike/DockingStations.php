@@ -31,6 +31,11 @@ final class DockingStations implements DockingStationsInterface
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        /** @var DockingStation $station */
+        foreach ($this->stations as $station) {
+            if ($station->getId() == $id) {
+                return $station;
+            }
+        }
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Cocoders\UseCase\AddDockingStation;
 
-class Command implements \Cocoders\UseCase\Command
+use Cocoders\UseCase\Command as BaseCommand;
+
+class Command implements BaseCommand
 {
     private $id;
     private $name;

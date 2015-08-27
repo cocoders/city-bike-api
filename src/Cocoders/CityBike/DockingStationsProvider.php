@@ -5,8 +5,13 @@ namespace Cocoders\CityBike;
 interface DockingStationsProvider
 {
     /**
-     * @return DockingStation[]
+     * @return integer
      */
     public function getAmount();
+
+
+    /**
+     * @return array
+     */
     public function getDockingStations();
 }

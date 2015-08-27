@@ -2,7 +2,9 @@
 
 namespace Cocoders\UseCase\UpdateAvailableBikes;
 
-class Response implements \Cocoders\UseCase\Response
+use Cocoders\UseCase\Response as BaseResponse;
+
+class Response implements BaseResponse
 {
     /**
      * @var

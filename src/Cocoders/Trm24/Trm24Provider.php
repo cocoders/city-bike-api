@@ -9,6 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class Trm24Provider implements DockingStationsProvider
 {
     private $client;
+    private $parsedLongLat;
 
     public function __construct(Client $client)
     {
@@ -82,19 +83,23 @@ class Trm24Provider implements DockingStationsProvider
     private function getTrm24Body()
     {
         $html = (string)$this->client->get('https://trm24.pl/mapa_stacji.html')->getBody();
-        return $crawler = new Crawler($html);
+        return new Crawler($html);
     }
 
     private function parseLatLong()
     {
+        if ($this->parsedLongLat) {
+            return $this->parsedLongLat;
+        }
         $scriptAsString = $this->getTrm24Body()->filterXPath('//*[@id="content"]/div/div/div[2]/script[2]')->text();
 
         preg_match_all(
             "/(?=marker)(.*)(\s=.*)([-+]?\d{2}[.]\d{2,})(.*)([-+]?\d{2}[.]\d{2,})/",
             $scriptAsString,
-            $matches
+            $this->parsedLongLat
         );
-        return $matches;
+
+        return $this->parsedLongLat;
     }
 
     private function parseLatitude($id)

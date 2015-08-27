@@ -36,13 +36,7 @@ class AddDockingStationsFromProviderCommand extends ContainerAwareCommand implem
     {
         $this
             ->setName('add:parse')
-            ->setDescription('Parse docking stations from the selected site')
-            ->addOption(
-                'force',
-                null,
-                InputOption::VALUE_NONE,
-                'If set, the task will execute without command prompt'
-            );
+            ->setDescription('Parse docking stations from the selected site');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -52,12 +46,6 @@ class AddDockingStationsFromProviderCommand extends ContainerAwareCommand implem
 
         if ($dockingStationsNumber < 1) {
             $output->writeln('No docking stations were found');
-            return;
-        }
-
-        if ($input->getOption('force')) {
-            $this->dockingStationsFactory->getDockingStations();
-            $output->writeln((string) $dockingStationsNumber . ' docking stations saved. ');
             return;
         }
 
