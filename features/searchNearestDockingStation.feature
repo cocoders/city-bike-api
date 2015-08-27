@@ -1,6 +1,8 @@
-Feature: As a public transport user
+Feature: Searching docking station
+
+  In order to use app which search nearest stations from my location
+  As a public transport user
   I want to find nearest bike docking station easily
-  so I can use app which search nearest stations from my location
 
   Background:
     Given there are such docking stations:
@@ -16,7 +18,3 @@ Feature: As a public transport user
       | Toruń Św Katarzyny       | 53.0132672 | 18.613699  |               2 |          2.66 |
       | Toruń Rynek Staromiejski | 53.010418  | 18.6037566 |               5 |          2.79 |
       | Toruń Plac Rapackiego    | 53.0099343 | 18.6010726 |               0 |          2.83 |
-
-    # 2.9km
-    # 3.0km
-    # 3.2km

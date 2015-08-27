@@ -2,3 +2,10 @@ default:
   extensions:
     RMiller\BehatSpec\BehatExtension:
       path:  bin/phpspec
+  suites:
+    administrator:
+      contexts: [ AdministratorContext ]
+      filters: { role: system administrator }
+    public_transport_user:
+      contexts: [ PublicTransportUserContext ]
+      filters: { role: public transport user }
