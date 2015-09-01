@@ -2,7 +2,7 @@
 
 namespace Cocoders\UseCase\UpdateAvailableBikes;
 
-use Cocoders\UseCase\Response as BaseResponder;
+use Cocoders\UseCase\Responder as BaseResponder;
 
 interface Responder extends BaseResponder
 {

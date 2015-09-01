@@ -19,7 +19,7 @@ class DockingStation
 
     public function setAvailableBikes($availableBikes)
     {
-        $this->availableBikes = $availableBikes;
+        $this->availableBikes = (int) $availableBikes;
     }
 
     public function getAvailableBikes()

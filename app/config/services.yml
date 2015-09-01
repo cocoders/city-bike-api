@@ -29,3 +29,13 @@ services:
     cocoders.trm24.client:
         class: GuzzleHttp\Client
         arguments: []
+
+    cocoders.use_case.update_available_bikes:
+        class: Cocoders\UseCase\UpdateAvailableBikes\UpdateAvailableBikes
+        arguments: ["@cocoders.repository.docking_station"]
+
+    cocoders.update_available_bikes_from_provider:
+        class: AppBundle\Command\UpdateAvailableBikesFromProviderCommand
+        tags:
+            -  { name: console.command }
+        arguments: [@cocoders.trm24.parser, @cocoders.use_case.update_available_bikes]

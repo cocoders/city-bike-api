@@ -15,7 +15,7 @@ class DockingStationsFileRepository implements DockingStations
     public function __construct()
     {
         $file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'Stations';
-        $this->stationsRepo = new FileRepository($file, new AccessorObjectIdentifier('getName'));
+        $this->stationsRepo = new FileRepository($file, new AccessorObjectIdentifier('getId'));
     }
 
     /**
@@ -23,6 +23,10 @@ class DockingStationsFileRepository implements DockingStations
      */
     public function add(DockingStation $dockingStation)
     {
+        if ($this->stationsRepo->findById($dockingStation->getId())) {
+            $this->stationsRepo->remove($dockingStation);
+        }
+
         $this->stationsRepo->save($dockingStation);
     }
 

@@ -51,6 +51,7 @@
                             <th>Station name</th>
                             <th>Latitude</th>
                             <th>Longitude</th>
+                            <th>Available bikes</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -60,6 +61,7 @@
                             <td>{{ station.name }}</td>
                             <td>{{ station.position.lat }}</td>
                             <td>{{ station.position.long }}</td>
+                            <td>{{ station.availableBikes }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
