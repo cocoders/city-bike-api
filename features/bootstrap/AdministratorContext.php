@@ -4,22 +4,21 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
-use Cocoders\CityBike\Position;
 
 /**
  * Defines administrative features from the specific context.
  */
-class AdministratorContext implements Context, SnippetAcceptingContext
+class AdministratorContext implements Context, SnippetAcceptingContext, \Cocoders\UseCase\AddDockingStation\Responder
 {
     /** @var \Cocoders\CityBike\DockingStations */
     private $dockingStations;
-    /** @var  \Cocoders\UseCase\AddDockingStation */
+    /** @var  \Cocoders\UseCase\AddDockingStation\AddDockingStation */
     private $addDockingStation;
 
     public function __construct()
     {
         $this->dockingStations = new \Cocoders\InMemory\CityBike\DockingStations();
-        $this->addDockingStation = new \Cocoders\UseCase\AddDockingStation($this->dockingStations);
+        $this->addDockingStation = new \Cocoders\UseCase\AddDockingStation\AddDockingStation($this->dockingStations);
     }
 
     /**
@@ -36,7 +35,12 @@ class AdministratorContext implements Context, SnippetAcceptingContext
     public function iAmAddingNewDockingStation(TableNode $table)
     {
         foreach ($table->getHash() as $row) {
-            $this->addDockingStation->execute(new \Cocoders\UseCase\AddDockingStationCommand($row['name'], $row['lat'], $row['long']));
+            $this->addDockingStation->execute(new \Cocoders\UseCase\AddDockingStation\Command(
+                $row['id'],
+                $row['name'],
+                $row['lat'],
+                $row['long']
+            ), $this);
         }
     }
 
@@ -53,5 +57,8 @@ class AdministratorContext implements Context, SnippetAcceptingContext
 
         throw new \Exception('Docking station not found');
     }
-}
 
+    public function addedDockingStation(\Cocoders\UseCase\AddDockingStation\Response $response)
+    {
+    }
+}

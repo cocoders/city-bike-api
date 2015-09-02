@@ -7,7 +7,7 @@ use Cocoders\CityBike\DockingStations;
 use Everzet\PersistedObjects\AccessorObjectIdentifier;
 use Everzet\PersistedObjects\FileRepository;
 
-class DockingStationsFileRepo implements DockingStations
+class DockingStationsFileRepository implements DockingStations
 {
 
     private $stationsRepo;
@@ -15,7 +15,7 @@ class DockingStationsFileRepo implements DockingStations
     public function __construct()
     {
         $file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'Stations';
-        $this->stationsRepo = new FileRepository($file, new AccessorObjectIdentifier('getName'));
+        $this->stationsRepo = new FileRepository($file, new AccessorObjectIdentifier('getId'));
     }
 
     /**
@@ -23,6 +23,10 @@ class DockingStationsFileRepo implements DockingStations
      */
     public function add(DockingStation $dockingStation)
     {
+        if ($this->stationsRepo->findById($dockingStation->getId())) {
+            $this->stationsRepo->remove($dockingStation);
+        }
+
         $this->stationsRepo->save($dockingStation);
     }
 
@@ -32,5 +36,13 @@ class DockingStationsFileRepo implements DockingStations
     public function findAll()
     {
         return $this->stationsRepo->getAll();
+    }
+
+    /**
+     * @return DockingStation
+     */
+    public function find($id)
+    {
+        return $this->stationsRepo->findById($id);
     }
 }

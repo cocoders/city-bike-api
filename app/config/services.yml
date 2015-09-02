@@ -8,20 +8,34 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-    docking_station:
-        class: Cocoders\File\CityBike\DockingStationsFileRepo
+    cocoders.repository.docking_station:
+        class: Cocoders\File\CityBike\DockingStationsFileRepository
         arguments: []
 
-    add_docking_station:
-        class: Cocoders\UseCase\AddDockingStation
-        arguments: ["@docking_station"]
+    cocoders.use_case.add_docking_station:
+        class: Cocoders\UseCase\AddDockingStation\AddDockingStation
+        arguments: ["@cocoders.repository.docking_station"]
 
-    docking_station_factory:
-        class: AppBundle\Command\Trm24Factory
-        arguments: []
+    cocoders.trm24.parser:
+        class: Cocoders\Trm24\Trm24Provider
+        arguments: [@cocoders.trm24.client]
 
-    add_trm24_stations_command:
-        class: AppBundle\Command\AddTrm24StationsCommand
+    cocoders.add_docking_stations_from_provider:
+        class: AppBundle\Command\AddDockingStationsFromProviderCommand
         tags:
             -  { name: console.command }
-        arguments: [@docking_station, @docking_station_factory]
+        arguments: [@cocoders.trm24.parser, @cocoders.use_case.add_docking_station]
+
+    cocoders.trm24.client:
+        class: GuzzleHttp\Client
+        arguments: []
+
+    cocoders.use_case.update_available_bikes:
+        class: Cocoders\UseCase\UpdateAvailableBikes\UpdateAvailableBikes
+        arguments: ["@cocoders.repository.docking_station"]
+
+    cocoders.update_available_bikes_from_provider:
+        class: AppBundle\Command\UpdateAvailableBikesFromProviderCommand
+        tags:
+            -  { name: console.command }
+        arguments: [@cocoders.trm24.parser, @cocoders.use_case.update_available_bikes]

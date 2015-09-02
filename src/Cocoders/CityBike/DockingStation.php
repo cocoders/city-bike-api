@@ -4,12 +4,14 @@ namespace Cocoders\CityBike;
 
 class DockingStation
 {
+    private $id;
     private $name;
     private $position;
     private $availableBikes;
 
-    public function __construct($name, Position $position)
+    public function __construct($id, $name, Position $position)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->position = $position;
         $this->availableBikes = 0;
@@ -17,7 +19,7 @@ class DockingStation
 
     public function setAvailableBikes($availableBikes)
     {
-        $this->availableBikes = $availableBikes;
+        $this->availableBikes = (int) $availableBikes;
     }
 
     public function getAvailableBikes()
@@ -33,5 +35,10 @@ class DockingStation
     public function getPosition()
     {
         return $this->position;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }

@@ -14,5 +14,9 @@ interface DockingStations
      * @return DockingStation[]
      */
     public function findAll();
-}
 
+    /**
+     * @return DockingStation
+     */
+    public function find($id);
+}

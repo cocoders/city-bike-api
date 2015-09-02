@@ -20,7 +20,9 @@
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "everzet/persisted-objects": "^1.0"
+        "everzet/persisted-objects": "^1.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "symfony/dom-crawler": "^2.7"
     },
     "require-dev": {
         "behat/behat": "~3.0",

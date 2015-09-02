@@ -41,6 +41,7 @@ class PublicTransportUserContext implements Context, SnippetAcceptingContext
     {
         foreach ($table->getHash() as $row) {
             $dockingStation = new \Cocoders\CityBike\DockingStation(
+                $row['id'],
                 $row['name'],
                 new Position(
                     $row['lat'],

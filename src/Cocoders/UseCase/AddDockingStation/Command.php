@@ -1,18 +1,30 @@
 <?php
 
-namespace Cocoders\UseCase;
+namespace Cocoders\UseCase\AddDockingStation;
 
-class AddDockingStationCommand
+use Cocoders\UseCase\Command as BaseCommand;
+
+class Command implements BaseCommand
 {
+    private $id;
     private $name;
     private $lat;
     private $long;
 
-    public function __construct($name, $lat, $long)
+    public function __construct($id, $name, $lat, $long)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->lat = $lat;
         $this->long = $long;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -39,4 +51,3 @@ class AddDockingStationCommand
         return $this->long;
     }
 }
-
