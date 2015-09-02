@@ -7,8 +7,7 @@ interface DockingStationsProvider
     /**
      * @return integer
      */
-    public function getAmount();
-
+    public function getNumberOfDockingStations();
 
     /**
      * @return array

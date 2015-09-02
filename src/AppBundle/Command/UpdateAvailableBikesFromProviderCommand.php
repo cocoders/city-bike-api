@@ -44,7 +44,7 @@ class UpdateAvailableBikesFromProviderCommand extends ContainerAwareCommand impl
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->output = $output;
-        $dockingStationsNumber = $this->dockingStationsFactory->getAmount();
+        $dockingStationsNumber = $this->dockingStationsFactory->getNumberOfDockingStations();
 
         $this->progress = new ProgressBar($output, $dockingStationsNumber);
         $this->progress->start();

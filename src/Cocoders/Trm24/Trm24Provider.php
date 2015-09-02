@@ -16,7 +16,7 @@ class Trm24Provider implements DockingStationsProvider
         $this->client = $client;
     }
 
-    public function getAmount()
+    public function getNumberOfDockingStations()
     {
         return count($this->getDockingStations());
     }

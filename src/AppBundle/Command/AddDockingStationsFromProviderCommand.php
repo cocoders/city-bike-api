@@ -41,7 +41,7 @@ class AddDockingStationsFromProviderCommand extends ContainerAwareCommand implem
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dockingStationsNumber = $this->dockingStationsFactory->getAmount();
+        $dockingStationsNumber = $this->dockingStationsFactory->getNumberOfDockingStations();
         $text = "$dockingStationsNumber docking stations were found on page. ";
 
         if ($dockingStationsNumber < 1) {
