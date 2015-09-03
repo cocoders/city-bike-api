@@ -14,8 +14,8 @@ use Cocoders\CityBike\Position;
 class PublicTransportUserContext implements Context, SnippetAcceptingContext
 {
     /** @var \Cocoders\CityBike\DockingStations  */
-    private $dockingStations;
-    private $foundDockingStations;
+    protected $dockingStations;
+    protected $foundDockingStations;
     /**
      * @var FoundDockingStation[]
      */
@@ -39,6 +39,8 @@ class PublicTransportUserContext implements Context, SnippetAcceptingContext
      */
     public function thereAreSuchDockingStations(TableNode $table)
     {
+        $this->dockingStations->removeAll();
+
         foreach ($table->getHash() as $row) {
             $dockingStation = new \Cocoders\CityBike\DockingStation(
                 $row['id'],

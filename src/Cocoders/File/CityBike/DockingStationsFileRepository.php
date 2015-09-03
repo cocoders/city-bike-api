@@ -45,4 +45,9 @@ class DockingStationsFileRepository implements DockingStations
     {
         return $this->stationsRepo->findById($id);
     }
+
+    public function removeAll()
+    {
+        $this->stationsRepo->clear();
+    }
 }

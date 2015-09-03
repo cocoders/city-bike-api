@@ -11,6 +11,7 @@ Feature: Searching docking station
     | 2   | Toruń Św Katarzyny       | 53.0132672 | 18.613699  |              2  |
     | 3   | Toruń Plac Rapackiego    | 53.0099343 | 18.6010726 |              0  |
 
+    @api
   Scenario: Searching next docking station
     When I am searching nearest bike docking stations from my posisiton which is "53.03531,18.598338"
     Then I should see such nearest docking stations:
