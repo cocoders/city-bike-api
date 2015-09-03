@@ -23,10 +23,10 @@ class UpdateAvailableBikesController extends Controller implements Responder
      */
     public function updateAvailableBikesAction()
     {
-        $stations = $this->get('cocoders.trm24.parser')->getDockingStations();
+        $stations = $this->parseDockingStations();
 
         foreach ($stations as $station) {
-            $this->get('cocoders.use_case.update_available_bikes')->execute(new Command(
+            $this->updateAvailableBikes()->execute(new Command(
                 $station['id'],
                 $station['availableBikes']), $this);
         }
@@ -35,9 +35,9 @@ class UpdateAvailableBikesController extends Controller implements Responder
 
     public function updatedAvailableBikesOnStations(Response $response)
     {
-        $this->addFlash(
+        $this->getFlashMessage(
             'notice',
-            'Available bikes successfully refreshed!'
+            ['Available bikes successfully refreshed!']
         );
 
         $this->response = $this->redirectToRoute('form');
@@ -45,11 +45,29 @@ class UpdateAvailableBikesController extends Controller implements Responder
 
     public function invalidDockingStation(Response $response)
     {
-        $this->addFlash(
+        $this->getFlashMessage(
             'notice',
-            'Available bikes NOT refreshed! Please review docking station repository.'
+            ['Available bikes NOT refreshed! Please review docking station repository.']
         );
 
         $this->response = $this->redirectToRoute('form');
+    }
+
+    private function parseDockingStations()
+    {
+        return $this->get('cocoders.trm24.parser')->getDockingStations();
+    }
+
+    private function updateAvailableBikes()
+    {
+        return $this->get('cocoders.use_case.update_available_bikes');
+    }
+
+    private function getFlashMessage($type, $message)
+    {
+        return $this->container->get('session')->getFlashBag()->set(
+            $type,
+            $message
+        );
     }
 }

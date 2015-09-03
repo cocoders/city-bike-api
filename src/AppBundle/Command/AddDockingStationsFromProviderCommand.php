@@ -72,7 +72,7 @@ class AddDockingStationsFromProviderCommand extends ContainerAwareCommand implem
         }
 
         $this->progress->finish();
-        echo "\n";
+        $output->writeln('');
     }
 
     public function addedDockingStation(Response $response)
