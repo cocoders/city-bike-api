@@ -39,3 +39,7 @@ services:
         tags:
             -  { name: console.command }
         arguments: [@cocoders.trm24.parser, @cocoders.use_case.update_available_bikes]
+
+    cocoders.found_docking_stations:
+        class: Cocoders\InMemory\CityBike\FoundDockingStations
+        arguments: ["@cocoders.repository.docking_station"]

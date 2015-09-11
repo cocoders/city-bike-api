@@ -19,6 +19,4 @@ interface DockingStations
      * @return DockingStation
      */
     public function find($id);
-
-    public function removeAll();
 }

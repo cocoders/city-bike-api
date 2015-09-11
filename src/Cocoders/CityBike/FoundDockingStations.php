@@ -6,9 +6,8 @@ interface FoundDockingStations
 {
     /**
      * @param Position $startPosition
-     * @param DockingStation[] $dockingStations
      * @return FoundDockingStation[]
      */
-    public function search(Position $startPosition, $dockingStations);
+    public function search(Position $startPosition);
 }
 

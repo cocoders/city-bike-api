@@ -39,9 +39,4 @@ final class DockingStations implements DockingStationsInterface
         }
         return null;
     }
-
-    public function removeAll()
-    {
-        $this->stations = [];
-    }
 }
