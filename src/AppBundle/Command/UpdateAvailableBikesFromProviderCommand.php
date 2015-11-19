@@ -58,7 +58,8 @@ class UpdateAvailableBikesFromProviderCommand extends ContainerAwareCommand impl
         }
 
         $this->progress->finish();
-        echo "\nAvailable bikes successfully refreshed! \n";
+        $output->writeln('');
+        $output->writeln('Available bikes successfully refreshed!');
     }
 
     public function updatedAvailableBikesOnStations(Response $response)
