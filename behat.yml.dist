@@ -2,6 +2,11 @@ default:
   extensions:
     RMiller\BehatSpec\BehatExtension:
       path:  bin/phpspec
+    Behat\Symfony2Extension: ~
+    Behat\MinkExtension:
+      default_session: 'symfony2'
+      sessions:
+        symfony2: { symfony2: ~ }
   suites:
     administrator:
       contexts: [ AdministratorContext ]
@@ -9,3 +14,8 @@ default:
     public_transport_user:
       contexts: [ PublicTransportUserContext ]
       filters: { role: public transport user }
+    api_public_transport_user:
+      contexts:
+          - ApiPublicTransportUserContext:
+              dockingStations: @cocoders.repository.docking_station
+      filters:  { role: public transport user, tags: api }

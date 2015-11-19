@@ -14,8 +14,8 @@ use Cocoders\CityBike\Position;
 class PublicTransportUserContext implements Context, SnippetAcceptingContext
 {
     /** @var \Cocoders\CityBike\DockingStations  */
-    private $dockingStations;
-    private $foundDockingStations;
+    protected $dockingStations;
+    protected $foundDockingStations;
     /**
      * @var FoundDockingStation[]
      */
@@ -31,7 +31,7 @@ class PublicTransportUserContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->dockingStations = new \Cocoders\InMemory\CityBike\DockingStations();
-        $this->foundDockingStations = new \Cocoders\InMemory\CityBike\FoundDockingStations();
+        $this->foundDockingStations = new \Cocoders\InMemory\CityBike\FoundDockingStations($this->dockingStations);
     }
 
     /**
@@ -58,10 +58,9 @@ class PublicTransportUserContext implements Context, SnippetAcceptingContext
      */
     public function iAmSearchingNearestBikeDockingStationsFromMyPosisitonWhichIs($positionString)
     {
-        $dockingStations = $this->dockingStations->findAll();
         $this->nearestDockingStations = $this
             ->foundDockingStations
-            ->search(Position::fromString($positionString), $dockingStations)
+            ->search(Position::fromString($positionString))
         ;
     }
 
